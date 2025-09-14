@@ -1,4 +1,4 @@
-  const swiper = new Swiper('#blogSlider', {
+  const swiperBlog = new Swiper('#blogSlider', {
     slidesPerView: 1,
     spaceBetween: 24,
     navigation: {
@@ -54,3 +54,29 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+// Testimonials
+document.addEventListener('DOMContentLoaded', function () { 
+	new Swiper('#testimonialSwiper', {
+    slidesPerView: 'auto',
+    spaceBetween: 24,
+      loop: true,
+    //mousewheel: true,
+    //grabCursor: true,
+    navigation: {
+      nextEl: '#next-testimonials',
+      prevEl: '#prev-testimonials',
+    },
+	breakpoints: {
+        500: {
+          slidesPerView: 2
+        },
+        800: {
+          slidesPerView: 3
+        },
+        1080: {
+          slidesPerView: 4
+        }
+      }
+  });
+})
