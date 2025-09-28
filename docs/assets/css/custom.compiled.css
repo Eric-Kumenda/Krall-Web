@@ -47,6 +47,19 @@ a {
   padding-top: 7.5rem !important;
 }
 
+.hover-effect-slide-up {
+  --bs-transition-duration: 0.25s ;
+}
+
+.hover-effect-slide-up .hover-effect-slide-up-target {
+  transition: transform var(--bs-transition-duration) ease-in-out, height var(--bs-transition-duration) ease-in-out;
+}
+
+.hover-effect-slide-up:hover .hover-effect-slide-up-target.card-body {
+  transform: translateY(-120px) !important;
+  height: 172px !important;
+}
+
 .animate-slide-end {
   overflow: hidden;
 }
