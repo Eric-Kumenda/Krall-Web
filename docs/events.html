@@ -20,8 +20,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display&amp;display=swap">
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="assets/css/custom.compiled.css">
     <link rel="stylesheet" href="assets/css/Hero-Clean-Reverse-images.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/css/Navbar-Right-Links-icons.css">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -31,7 +33,7 @@
     <nav class="navbar navbar-expand-md sticky-md-top py-3 shadow bg-dark" id="navbarTop" data-bs-theme="dark">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="index.html"><span class="bs-icon-sm bs-icon-rounded d-flex justify-content-center align-items-center me-2 bs-icon"><img src="assets/img/Krall%20Logo%20-Primary.svg" width="36" loading="eager"></span><span class="text-uppercase fs-6 ps-1" style="letter-spacing: 1.5px;">Krall</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto" id="PageNav">
                     <li class="nav-item me-md-1"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item me-md-1"><a class="nav-link" href="about.html">About</a></li>
                     <li class="nav-item me-md-1"><a class="nav-link active" href="events.html">Events</a></li>
@@ -50,6 +52,17 @@
                     <p class="text-center">Lorem Ipsum Dolor Sit Amet</p>
                 </div>
             </div>
+            <div class="row mb-2">
+                <div class="col">
+                    <ul class="nav nav-pills d-flex justify-content-center gap-2">
+                        <li class="nav-item"><button class="btn btn-primary btn-sm rounded-pill px-3" type="button">All</button></li>
+                        <li class="nav-item"><button class="btn btn-outline-secondary btn-sm rounded-pill px-3" type="button">Art</button></li>
+                        <li class="nav-item"><button class="btn btn-outline-secondary btn-sm rounded-pill px-3" type="button">Book Club</button></li>
+                        <li class="nav-item"><button class="btn btn-outline-secondary btn-sm rounded-pill px-3" type="button">Music</button></li>
+                        <li class="nav-item"><button class="btn btn-outline-secondary btn-sm rounded-pill px-3" type="button">Sports</button></li>
+                    </ul>
+                </div>
+            </div>
             <div class="row gy-2 gy-md-3 py-2">
                 <div class="col d-flex flex-column flex-md-row border-bottom border-tertiary">
                     <div class="d-flex d-md-block justify-content-center ratio-ratio-16x9 py-2"><img class="img-fluid rounded-4" src="https://images.unsplash.com/photo-1561489396-888724a1543d?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGV2ZW50fGVufDB8MHwwfHx8MA%3D%3D" style="max-width: 300px;"></div>
@@ -59,7 +72,7 @@
                             <p class="fs-sm fw-lighter">Lorem ipsum Dolor sit amet consecteur von amor sit ipsum Dolor sit amet consecteur von amor sit ipsum Dolor sit amet consecteur von amor sit</p>
                             <p class="fs-sm fw-lighter mb-2">Host / Organizer:&nbsp;<span class="ms-2 fw-bold">Kylian Centra</span></p>
                             <p class="fs-sm fw-lighter">Date:&nbsp;<span class="ms-2 fw-bold">Wed, 12 September, 2016&nbsp;</span>&nbsp;at<span class="ms-2 fw-bold">2pm - 5.30pm</span></p>
-                            <div class="d-block d-md-flex justify-content-start py-1 gap-3"><a class="btn btn-primary d-block px-5 rounded mb-2" role="button" href="#">Get Ticket</a><a class="btn btn-outline-light d-block px-4 rounded mb-2" role="button" href="#">See Details</a></div>
+                            <div class="d-block d-md-flex justify-content-start py-1 gap-3"><a class="btn btn-primary d-block px-5 rounded mb-2" role="button" href="event.html">Get Ticket</a><a class="btn btn-outline-light d-block px-4 rounded mb-2" role="button" href="event.html">See Details</a></div>
                             <div class="py-1"></div>
                         </div>
                     </div>
@@ -72,7 +85,7 @@
                             <p class="fs-sm fw-lighter">Lorem ipsum Dolor sit amet consecteur von amor sit ipsum Dolor sit amet consecteur von amor sit ipsum Dolor sit amet consecteur von amor sit</p>
                             <p class="fs-sm fw-lighter mb-2">Host / Organizer:&nbsp;<span class="ms-2 fw-bold">Kylian Centra</span></p>
                             <p class="fs-sm fw-lighter">Date:&nbsp;<span class="ms-2 fw-bold">Wed, 12 September, 2016&nbsp;</span>&nbsp;at<span class="ms-2 fw-bold">2pm - 5.30pm</span></p>
-                            <div class="d-block d-md-flex justify-content-start py-1 gap-3"><a class="btn btn-primary d-block px-5 rounded mb-2" role="button" href="#">Get Ticket</a><a class="btn btn-outline-light d-block px-4 rounded mb-2" role="button" href="#">See Details</a></div>
+                            <div class="d-block d-md-flex justify-content-start py-1 gap-3"><a class="btn btn-primary d-block px-5 rounded mb-2" role="button" href="event.html">Get Ticket</a><a class="btn btn-outline-light d-block px-4 rounded mb-2" role="button" href="event.html">See Details</a></div>
                             <div class="py-1"></div>
                         </div>
                     </div>
@@ -85,7 +98,7 @@
                             <p class="fs-sm fw-lighter">Lorem ipsum Dolor sit amet consecteur von amor sit ipsum Dolor sit amet consecteur von amor sit ipsum Dolor sit amet consecteur von amor sit</p>
                             <p class="fs-sm fw-lighter mb-2">Host / Organizer:&nbsp;<span class="ms-2 fw-bold">Kylian Centra</span></p>
                             <p class="fs-sm fw-lighter">Date:&nbsp;<span class="ms-2 fw-bold">Wed, 12 September, 2016&nbsp;</span>&nbsp;at<span class="ms-2 fw-bold">2pm - 5.30pm</span></p>
-                            <div class="d-block d-md-flex justify-content-start py-1 gap-3"><a class="btn btn-primary d-block px-5 rounded mb-2" role="button" href="#">Get Ticket</a><a class="btn btn-outline-light d-block px-4 rounded mb-2" role="button" href="#">See Details</a></div>
+                            <div class="d-block d-md-flex justify-content-start py-1 gap-3"><a class="btn btn-primary d-block px-5 rounded mb-2" role="button" href="event.html">Get Ticket</a><a class="btn btn-outline-light d-block px-4 rounded mb-2" role="button" href="event.html">See Details</a></div>
                             <div class="py-1"></div>
                         </div>
                     </div>
@@ -98,7 +111,7 @@
                             <p class="fs-sm fw-lighter">Lorem ipsum Dolor sit amet consecteur von amor sit ipsum Dolor sit amet consecteur von amor sit ipsum Dolor sit amet consecteur von amor sit</p>
                             <p class="fs-sm fw-lighter mb-2">Host / Organizer:&nbsp;<span class="ms-2 fw-bold">Kylian Centra</span></p>
                             <p class="fs-sm fw-lighter">Date:&nbsp;<span class="ms-2 fw-bold">Wed, 12 September, 2016&nbsp;</span>&nbsp;at<span class="ms-2 fw-bold">2pm - 5.30pm</span></p>
-                            <div class="d-block d-md-flex justify-content-start py-1 gap-3"><a class="btn btn-primary d-block px-5 rounded mb-2" role="button" href="#">Get Ticket</a><a class="btn btn-outline-light d-block px-4 rounded mb-2" role="button" href="#">See Details</a></div>
+                            <div class="d-block d-md-flex justify-content-start py-1 gap-3"><a class="btn btn-primary d-block px-5 rounded mb-2" role="button" href="event.html">Get Ticket</a><a class="btn btn-outline-light d-block px-4 rounded mb-2" role="button" href="event.html">See Details</a></div>
                             <div class="py-1"></div>
                         </div>
                     </div>
@@ -149,7 +162,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="assets/js/map.js"></script>
     <script src="assets/js/eventAccordions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script src="assets/js/sliders.js"></script>

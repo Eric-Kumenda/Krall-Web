@@ -60,6 +60,19 @@ a {
   height: 172px !important;
 }
 
+.hover-effect-saturate {
+  --bs-transition-duration: 0.3s ;
+}
+
+.hover-effect-saturate .hover-effect-saturate-target {
+  filter: grayscale(100%);
+  transition: filter var(--bs-transition-duration) ease-in-out;
+}
+
+.hover-effect-saturate:hover .hover-effect-saturate-target {
+  filter: grayscale(0%);
+}
+
 .animate-slide-end {
   overflow: hidden;
 }

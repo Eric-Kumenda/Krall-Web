@@ -1,8 +1,8 @@
-.nav-item:hover {
+#PageNav > .nav-item:hover {
   border-bottom: 1px var(--bs-primary) solid;
 }
 
-.nav-item {
+#PageNav > .nav-item {
   transition-property: border-bottom;
   transition-duration: 0.4s;
   border-bottom: 1px var(--bs-body-bg) solid;

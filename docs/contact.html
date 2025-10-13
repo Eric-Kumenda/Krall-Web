@@ -20,8 +20,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display&amp;display=swap">
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="assets/css/custom.compiled.css">
     <link rel="stylesheet" href="assets/css/Hero-Clean-Reverse-images.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/css/Navbar-Right-Links-icons.css">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -31,7 +33,7 @@
     <nav class="navbar navbar-expand-md sticky-md-top py-3 shadow bg-dark" id="navbarTop" data-bs-theme="dark">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="index.html"><span class="bs-icon-sm bs-icon-rounded d-flex justify-content-center align-items-center me-2 bs-icon"><img src="assets/img/Krall%20Logo%20-Primary.svg" width="36" loading="eager"></span><span class="text-uppercase fs-6 ps-1" style="letter-spacing: 1.5px;">Krall</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto" id="PageNav">
                     <li class="nav-item me-md-1"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item me-md-1"><a class="nav-link" href="about.html">About</a></li>
                     <li class="nav-item me-md-1"><a class="nav-link" href="events.html">Events</a></li>
@@ -43,7 +45,7 @@
         </div>
     </nav>
     <section>
-        <div class="container py-3 mb-2 mb-sm-3 mb-md-4 mb-lg-5 mt-lg-3 mt-xl-4">
+        <div class="container py-3 mb-1 mt-lg-3 mt-xl-4">
             <h2 class="text-center">Contact us</h2>
             <p class="text-center pb-2 pb-sm-3">Fill out the form below and we will reply within 24 hours</p>
             <section class="row row-cols-1 row-cols-md-2 g-0 overflow-hidden rounded-5">
@@ -92,8 +94,8 @@
                         </svg></div>
                     <h6 class="fw-bold">Send a message</h6>
                     <ul class="list-unstyled m-0">
-                        <li class="justify-content-center nav animate-underline"> Customers: <a class="nav-link animate-target fs-base ms-1 p-0 fw-semibold" href="mailto:info@cartzilla.com">info@krall.com</a></li>
-                        <li class="justify-content-center nav animate-underline"> Franchise: <a class="nav-link animate-target fs-base ms-1 p-0 fw-semibold" href="mailto:franchise@cartzilla.com">franchise@krall.com</a></li>
+                        <li class="justify-content-center nav animate-underline"> General: <a class="nav-link animate-target fs-base ms-1 p-0 fw-semibold" href="mailto:info@thekrallkonsult.com">info@thekrallkonsult.com</a></li>
+                        <li class="justify-content-center nav animate-underline"> Donors/Partners: <a class="nav-link animate-target fs-base ms-1 p-0 fw-semibold" href="mailto:franchise@cartzilla.com">admin@krall.com</a></li>
                     </ul>
                 </div>
                 <div class="col text-center pt-1 pt-sm-2 pt-md-3">
@@ -103,8 +105,8 @@
                         </svg></div>
                     <h6 class="fw-bold">Workspace location</h6>
                     <ul class="list-unstyled m-0">
-                        <li>New York 11741, USA</li>
-                        <li class="d-flex justify-content-center animate-underline"><a class="nav-link animate-target fs-base ms-1 p-0 fw-semibold" href="mailto:franchise@cartzilla.com"><strong>396 Lillian Bolavandy, Holbrook</strong></a></li>
+                        <li>Ongata Rongai, Kajiado, Kenya</li>
+                        <li class="d-flex justify-content-center animate-underline"><a class="nav-link animate-target fs-base ms-1 p-0 fw-semibold" href="https://maps.app.goo.gl/XaNu3mzozbCtTjNz9" target="_blank">11 Mwewe St, Acacia Village Estate</a></li>
                     </ul>
                 </div>
                 <div class="col text-center pt-1 pt-sm-2 pt-md-3">
@@ -119,12 +121,19 @@
                     </ul>
                 </div>
             </section>
-            <hr class="my-lg-5">
-            <section class="text-center pb-xxl-3 pt-4 pt-lg-3">
-                <h2 class="pt-md-2 pt-lg-0">Looking for support?</h2>
-                <p class="pb-2 pb-sm-3">We might already have what you're looking for. See our FAQs or head to our dedicated Help Center.</p><a class="btn btn-outline-dark rounded-pill" role="button" href="#!">Help Center</a>
-            </section>
+            <hr class="my-lg-2 mx-auto">
         </div>
+    </section>
+    <section class="container py-3 py-xl-4 position-relative">
+        <div class="row mb-5">
+            <div class="col d-flex justify-content-center">
+                <div id="map" class="w-100 overflow-hidden rounded-4" style="height: 500px;"></div>
+            </div>
+        </div>
+        <section class="text-center py-4 py-lg-3">
+            <h2 class="pt-md-2 pt-lg-0">Looking for support?</h2>
+            <p class="pb-2 pb-sm-3">We might already have what you're looking for. See our FAQs or head to our dedicated Help Center.</p><a class="btn btn-outline-light" role="button" href="terms.html">Help Center</a>
+        </section>
     </section>
     <footer class="text-body shadow" style="background: linear-gradient(90deg, #74683a 0%, #60511b 100%);">
         <div class="container py-4 py-lg-5">
@@ -169,7 +178,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="assets/js/map.js"></script>
     <script src="assets/js/eventAccordions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script src="assets/js/sliders.js"></script>

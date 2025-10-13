@@ -20,8 +20,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display&amp;display=swap">
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="assets/css/custom.compiled.css">
     <link rel="stylesheet" href="assets/css/Hero-Clean-Reverse-images.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/css/Navbar-Right-Links-icons.css">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -31,7 +33,7 @@
     <nav class="navbar navbar-expand-md sticky-md-top py-3 shadow bg-dark" id="navbarTop" data-bs-theme="dark">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="index.html"><span class="bs-icon-sm bs-icon-rounded d-flex justify-content-center align-items-center me-2 bs-icon"><img src="assets/img/Krall%20Logo%20-Primary.svg" width="36" loading="eager"></span><span class="text-uppercase fs-6 ps-1" style="letter-spacing: 1.5px;">Krall</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto" id="PageNav">
                     <li class="nav-item me-md-1"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item me-md-1"><a class="nav-link active" href="about.html">About</a></li>
                     <li class="nav-item me-md-1"><a class="nav-link" href="events.html">Events</a></li>
@@ -44,40 +46,36 @@
     </nav>
     <section class="container py-4">
         <div class="row">
-            <div class="col-md-7 order-md-first mb-4 mb-md-0">
-                <div class="position-relative h-100 rounded-end-4 overflow-hidden">
+            <div class="col-12 order-md-first position-relative mb-0 mb-md-3">
+                <div class="position-relative rounded-4 overflow-hidden z-0">
                     <div class="ratio ratio-16x9"></div><img class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover rounded-0" src="https://images.unsplash.com/photo-1512238972088-8acb84db0771?w=1500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fG1lbnRvcmluZ3xlbnwwfHwwfHx8MA%3D%3D" alt="Image">
                 </div>
-            </div>
-            <div class="col-md-5 order-md-1">
-                <div class="position-relative py-5 px-4 px-sm-5"><span class="position-absolute top-0 start-0 w-100 h-100 rounded-4 d-none-dark rtl-flip" style="background: linear-gradient(-90deg, #161718 0%, #150f08 100%);"></span><span class="d-none position-absolute top-0 start-0 w-100 h-100 rounded-4 d-block-dark rtl-flip" style="background:linear-gradient(-90deg, #1b273a 0%, #1f2632 100%);"></span>
-                    <div class="position-relative z-1 py-md-2 py-lg-4 py-xl-5 px-xl-2 px-xxl-4 my-xxl-3">
+                <div class="position-absolute z-2 top-0 start-0 w-100 h-100" style="/*clip-path: polygon(100% 0%, 100% 100%, 0% 100%);*/"><span class="position-absolute top-50 start-50 w-25 h-25 rounded-4 d-none-dark rtl-flip user-select-none" style="background-image: url(&quot;assets/img/Krall%20Logo%20-Primary.svg&quot;);background-position: center;background-size: 3rem;background-repeat: no-repeat;transform: translateX(-50%) translateY(-50%);opacity: 55%;/*clip-path: polygon(30% 30%, 33.5% 22%, 33.5% 70%, 30% 62%);*/"></span><span class="d-none position-absolute top-0 start-0 w-100 h-100 rounded-4 d-block-dark rtl-flip" style="background: linear-gradient(-90deg, #1b273a 0%, #1f2632 100%);"></span>
+                    <div class="text-center container z-1 position-absolute bottom-0 px-4 py-3 d-none d-md-block" style="background: rgba(45,36,0,0.82);">
                         <h2 class="pb-1 pb-md-2 pb-lg-3">THE KRALL K'OMMUNITY</h2>
-                        <p class="text-dark-emphasis pb-sm-2 pb-lg-0 mb-4 mb-lg-5">Since 2015, we have been fulfilling the small dreams and big plans of millions of people. You can find literally everything here.</p><a class="btn btn-outline-light animate-slide-down" role="button" href="#mission"> Learn more <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-down animate-target ms-2 me-n1">
-                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"></path>
-                            </svg></a>
+                        <p class="pb-sm-2 pb-lg-0 mb-2 mb-lg-3">Since 2015, we have been fulfilling the small dreams and big plans of millions of people. You can find literally everything here.</p>
                     </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="text-center d-md-none container z-1 px-4 py-3 rounded-4" style="/*background: rgba(45,36,0,0.68);*/">
+                    <h2 class="pb-1 pb-md-2 pb-lg-3">THE KRALL K'OMMUNITY</h2>
+                    <p class="pb-sm-2 pb-lg-0 mb-2 mb-lg-3">Since 2015, we have been fulfilling the small dreams and big plans of millions of people. You can find literally everything here.</p>
                 </div>
             </div>
         </div>
     </section>
-    <section class="container py-5 mt-md-2 mt-lg-4">
-        <div class="row row-cols-2 row-cols-md-4 g-4">
-            <div class="col text-center">
-                <div class="text-dark-emphasis display-4 mb-2"><span>14k</span></div>
-                <p class="fs-sm mb-0">products available for purchase</p>
+    <section class="container pt-1">
+        <div class="row pt-2 pt-sm-3 pt-md-4 pt-lg-5">
+            <div class="col-md-5 col-lg-6 pb-1 pb-sm-2 pb-md-0 mb-4 mb-md-0">
+                <div class="ratio ratio-1x1"><img src="https://images.unsplash.com/photo-1528716321680-815a8cdb8cbe?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fG1lbnRvcmluZ3xlbnwwfHwwfHx8MA%3D%3D" class="rounded-5" alt="Image"></div>
             </div>
-            <div class="col text-center">
-                <div class="text-dark-emphasis display-4 mb-2"><span>120m</span></div>
-                <p class="fs-sm mb-0">users visited site from 2015</p>
-            </div>
-            <div class="col text-center">
-                <div class="text-dark-emphasis display-4 mb-2"><span>800+</span></div>
-                <p class="fs-sm mb-0">employees around the world </p>
-            </div>
-            <div class="col text-center">
-                <div class="text-dark-emphasis display-4 mb-2"><span>92%</span></div>
-                <p class="fs-sm mb-0">of our customers return</p>
+            <div class="col-md-7 col-lg-6 pt-md-3 pt-xl-4 pt-xxl-5">
+                <div class="ps-md-3 ps-lg-4 ps-xl-5 ms-xxl-4">
+                    <h2 class="fw-normal text-body fs-sm">Background</h2>
+                    <h3 class="h1 pb-1 pb-sm-2 pb-lg-3">Creativity Takes Courage</h3>
+                    <p class="pb-xl-3">The Krall is a comprehensive solution to fulfill any customer's needs, serving as both the starting point and end destination of their search. It operates as a reliable assistant, dedicated to eliminating the need for any unpleasant compromises, making their dreams a reality, and empowering them to think big.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -86,41 +84,7 @@
             <h2 class="fw-normal text-body fs-sm">Mission</h2>
             <h3 class="mx-auto h1 pb-2 pb-md-3" style="max-width:400px;">The best products at fair prices</h3>
             <p class="fs-xl pb-2 pb-md-3 pb-lg-4">"We believe that things exist to make life easier, more pleasant and kinder. That's why the search for the right thing should be quick, convenient and enjoyable. We do not just sell household appliances and electronics, but comfort and accessibility."</p><img class="rounded-circle d-block mx-auto mb-3" src="https://images.unsplash.com/photo-1742119971773-57e0131095b0?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNlb3xlbnwwfDJ8MHx8fDA%3D" width="64" alt="Avatar">
-            <h6 class="mb-0">William Lacker, brand CEO</h6>
-        </div>
-    </section>
-    <section class="container pt-5">
-        <div class="row pt-2 pt-sm-3 pt-md-4 pt-lg-5">
-            <div class="col-md-5 col-lg-6 pb-1 pb-sm-2 pb-md-0 mb-4 mb-md-0">
-                <div class="ratio ratio-1x1"><img src="https://images.unsplash.com/photo-1528716321680-815a8cdb8cbe?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fG1lbnRvcmluZ3xlbnwwfHwwfHx8MA%3D%3D" class="rounded-5" alt="Image"></div>
-            </div>
-            <div class="col-md-7 col-lg-6 pt-md-3 pt-xl-4 pt-xxl-5">
-                <div class="ps-md-3 ps-lg-4 ps-xl-5 ms-xxl-4">
-                    <h2 class="fw-normal text-body fs-sm">Principles</h2>
-                    <h3 class="h1 pb-1 pb-sm-2 pb-lg-3">The main principles that will allow us to grow</h3>
-                    <p class="pb-xl-3">Unitech is a comprehensive solution to fulfill any customer's needs, serving as both the starting point and end destination of their search. It operates as a reliable assistant, dedicated to eliminating the need for any unpleasant compromises, making their dreams a reality, and empowering them to think big.</p>
-                    <div class="accordion accordion-alt-icon" id="principles">
-                        <div class="accordion-item">
-                            <h3 class="accordion-header" id="headingFocus"><button type="button" class="accordion-button animate-underline collapsed" data-bs-toggle="collapse" data-bs-target="#focus" aria-expanded="false" aria-controls="focus"><span class="animate-target me-2">Customer focus</span></button></h3>
-                            <div class="accordion-collapse collapse" id="focus" aria-labelledby="headingFocus" data-bs-parent="#principles">
-                                <div class="accordion-body"><span>We prioritize understanding and anticipating our customers' needs, delivering an exceptional and personalized experience from start to finish.</span></div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h3 class="accordion-header" id="headingReputation"><button type="button" class="accordion-button animate-underline collapsed" data-bs-toggle="collapse" data-bs-target="#reputation" aria-expanded="false" aria-controls="reputation"><span class="animate-target me-2">Betting on reputation</span></button></h3>
-                            <div class="accordion-collapse collapse" id="reputation" aria-labelledby="headingReputation" data-bs-parent="#principles">
-                                <div class="accordion-body"><span>We value a solid reputation built on integrity, transparency, and quality - ensuring our customers trust and rely on our brand.</span></div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h3 class="accordion-header" id="headingFast"><button type="button" class="accordion-button animate-underline collapsed" data-bs-toggle="collapse" data-bs-target="#fast" aria-expanded="false" aria-controls="fast"><span class="animate-target me-2">Fast, convenient and enjoyable</span></button></h3>
-                            <div class="accordion-collapse collapse" id="fast" aria-labelledby="headingFast" data-bs-parent="#principles">
-                                <div class="accordion-body"><span>We've streamlined our process for speed, convenience, and an enjoyable shopping experience, redefining online standards for our delighted customers.</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h6 class="mb-0">Moses Kibe Kihiko, Director</h6>
         </div>
     </section>
     <section class="container py-4">
@@ -301,7 +265,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="assets/js/map.js"></script>
     <script src="assets/js/eventAccordions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script src="assets/js/sliders.js"></script>
