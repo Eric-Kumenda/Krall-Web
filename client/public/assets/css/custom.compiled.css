@@ -1,0 +1,160 @@
+.btn-check {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  pointer-events: none;
+}
+
+.btn-icon {
+  --bs-btn-size: 2.5rem;
+  flex-shrink: 0;
+  height: var(--bs-btn-size);
+  padding: 0;
+  width: var(--bs-btn-size);
+}
+
+.btn-color {
+  --bs-btn-active-border-color: var(--cz-tertiary-color);
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  height: 1em;
+  padding: 0.125rem;
+  width: 1em;
+}
+
+.btn-color:before {
+  background-color: currentcolor;
+  border-radius: 50%;
+  content: "";
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: var(--bs-body-color);
+}
+
+@media (min-width: 768px) {
+  .bg-md-transparent {
+    opacity: 1;
+    background: transparent !important;
+  }
+}
+.py-10 {
+  padding-bottom: 7.5rem !important;
+  padding-top: 7.5rem !important;
+}
+
+.hover-effect-slide-up {
+  --bs-transition-duration: 0.25s ;
+}
+
+.hover-effect-slide-up .hover-effect-slide-up-target {
+  transition: transform var(--bs-transition-duration) ease-in-out, height var(--bs-transition-duration) ease-in-out;
+}
+
+.hover-effect-slide-up:hover .hover-effect-slide-up-target.card-body {
+  transform: translateY(-120px) !important;
+  height: 172px !important;
+}
+
+.hover-effect-saturate {
+  --bs-transition-duration: 0.3s ;
+}
+
+.hover-effect-saturate .hover-effect-saturate-target {
+  filter: grayscale(100%);
+  transition: filter var(--bs-transition-duration) ease-in-out;
+}
+
+.hover-effect-saturate:hover .hover-effect-saturate-target {
+  filter: grayscale(0%);
+}
+
+.animate-slide-end {
+  overflow: hidden;
+}
+.animate-slide-end:hover .animate-target, .animate-slide-end:focus-visible .animate-target {
+  animation: slide-end 0.3s forwards;
+}
+
+.animate-slide-start {
+  overflow: hidden;
+}
+.animate-slide-start:hover .animate-target, .animate-slide-start:focus-visible .animate-target {
+  animation: slide-start 0.3s forwards;
+}
+
+.animate-slide-up {
+  overflow: hidden;
+}
+.animate-slide-up:hover .animate-target, .animate-slide-up:focus-visible .animate-target {
+  animation: slide-up 0.3s forwards;
+}
+
+.animate-slide-down {
+  overflow: hidden;
+}
+.animate-slide-down:hover .animate-target, .animate-slide-down:focus-visible .animate-target {
+  animation: slide-down 0.3s forwards;
+}
+
+@keyframes slide-end {
+  49% {
+    transform: translate(100%);
+  }
+  50% {
+    opacity: 0;
+    transform: translate(-100%);
+  }
+  51% {
+    opacity: 1;
+  }
+}
+@keyframes slide-start {
+  49% {
+    transform: translate(-100%);
+  }
+  50% {
+    opacity: 0;
+    transform: translate(100%);
+  }
+  51% {
+    opacity: 1;
+  }
+}
+@keyframes slide-up {
+  49% {
+    transform: translateY(-100%);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  51% {
+    opacity: 1;
+  }
+}
+@keyframes slide-down {
+  49% {
+    transform: translateY(100%);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  51% {
+    opacity: 1;
+  }
+}
+.animate-blinking {
+  animation: blinking 1s infinite;
+}
+
+@keyframes blinking {
+  from {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,113 @@
+#PageNav > .nav-item:hover {
+  border-bottom: 1px var(--bs-primary) solid;
+}
+
+#PageNav > .nav-item:has(.active) {
+  border-bottom: 1px var(--bs-primary) solid;
+}
+
+#PageNav > .nav-item {
+  transition-property: border-bottom;
+  transition-duration: 0.4s;
+  border-bottom: 1px rgba(255,255,255,0.1) solid;
+}
+
+.col__values {
+  min-width: 180px;
+  margin-bottom: -20%;
+}
+
+hr {
+  width: 40px;
+}
+
+.fs-xs, .fs-xs > * {
+  font-size: .75rem !important;
+}
+
+.fs-sm, .fs-sm > * {
+  font-size: 0.875rem !important;
+}
+
+/* Underline base style */
+
+.animate-underline.animate-target, .animate-underline .animate-target {
+  text-decoration: none;
+  position: relative;
+}
+
+.animate-underline.animate-target::after, .animate-underline .animate-target::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--bs-underline-thickness, 2px);
+  background-color: currentColor;
+  transition: transform 0.3s ease-out;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+}
+
+/* Trigger underline on hover, focus, or active */
+
+.animate-underline:hover.animate-target::after, .animate-underline:focus-visible.animate-target::after, .animate-underline.show.animate-target::after, .animate-underline.active.animate-target::after, .animate-underline:hover .animate-target::after, .animate-underline:focus-visible .animate-target::after, .animate-underline.show .animate-target::after, .animate-underline.active .animate-target::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* ---------- Hover Effect: Scale ---------- */
+
+.hover-effect-scale {
+  --bs-transition-duration: 0.35s;
+  --bs-transform-scale: 1.06;
+}
+
+.hover-effect-scale .hover-effect-target {
+  transition: transform var(--bs-transition-duration) ease-in-out;
+}
+
+.hover-effect-scale:hover .hover-effect-target, .hover-effect-scale:focus-visible .hover-effect-target, .hover-effect-scale:focus-within .hover-effect-target {
+  transform: scale(var(--bs-transform-scale));
+}
+
+/* ---------- Hover Effect: Opacity ---------- */
+
+.hover-effect-opacity {
+  --bs-transition-duration: 0.25s;
+}
+
+.hover-effect-opacity .hover-effect-target {
+  transition: visibility var(--bs-transition-duration) ease-in-out, opacity var(--bs-transition-duration) ease-in-out;
+}
+
+.hover-effect-opacity:hover .hover-effect-target.opacity-0, .hover-effect-opacity:focus-visible .hover-effect-target.opacity-0, .hover-effect-opacity:focus-within .hover-effect-target.opacity-0 {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.hover-effect-opacity:hover .hover-effect-target.opacity-100, .hover-effect-opacity:focus-visible .hover-effect-target.opacity-100, .hover-effect-opacity:focus-within .hover-effect-target.opacity-100 {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* ---------- Combined Scale + Opacity ---------- */
+
+.hover-effect-scale.hover-effect-opacity .hover-effect-target {
+  transition: all var(--bs-transition-duration) ease-in-out;
+}
+
+/* ---------- Hover Effect: Underline ---------- */
+
+.hover-effect-underline:hover {
+  text-decoration: underline !important;
+  text-decoration-thickness: var(--bs-underline-thickness, 2px) !important;
+}
+
+.swiper-wrapper > div > img {
+  user-select: none;
+}
+
+.ratio-16x9 --bs-aspect-ratio: calc(9 / 16 * 100%); @include media-breakpoint-up(md) --bs-aspect-ratio: 100%; // 1x1 {
+}
+
