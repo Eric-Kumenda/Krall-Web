@@ -1,5 +1,6 @@
 import React from 'react';
-import ServiceCard from '../ui/ServiceCard';
+import SectionHeader from '../../SectionHeader';
+import ServiceCard from '../../ui/ServiceCard';
 import { Book, Calendar, Camera, Coffee, Film, Home } from 'lucide-react';
 
 export default function ServicesSection() {

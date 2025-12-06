@@ -1,4 +1,5 @@
 import React from 'react';
+import StatCard from '../../ui/StatCard';
 import { ArrowRight } from 'lucide-react';
 
 export default function ImpactSection() {

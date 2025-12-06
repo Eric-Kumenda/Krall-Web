@@ -1,7 +1,9 @@
+
 import React from 'react';
-import Image from 'next/image';
+import SectionHeader from '../../SectionHeader';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 export default function WhatWeAreSection() {
   return (

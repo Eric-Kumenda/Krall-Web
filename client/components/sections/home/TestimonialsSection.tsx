@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, Pagination } from 'swiper/modules';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
-import TestimonialCard from '../ui/TestimonialCard';
+import SectionHeader from '../../SectionHeader';
+import TestimonialCard from '../../ui/TestimonialCard';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -59,13 +60,13 @@ export default function TestimonialsSection() {
           
           <div className="flex gap-4 mt-6 md:mt-0">
             <button 
-              className="prev-testimonial p-3 rounded-full border border-gray-600 text-white hover:bg-primary hover:text-yellow-500 hover:border-primary transition-all duration-300"
+              className="prev-testimonial p-3 rounded-full border border-gray-600 text-white hover:bg-primary hover:text-gray-900 hover:border-primary transition-all duration-300"
               aria-label="Previous slide"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button 
-              className="next-testimonial p-3 rounded-full border border-gray-600 text-white hover:bg-primary hover:text-yellow-500 hover:border-primary transition-all duration-300"
+              className="next-testimonial p-3 rounded-full border border-gray-600 text-white hover:bg-primary hover:text-gray-900 hover:border-primary transition-all duration-300"
               aria-label="Next slide"
             >
               <ChevronRight className="w-6 h-6" />

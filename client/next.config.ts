@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
 				protocol: "https",
 				hostname: "bootstrapmade.com",
 			},
+			{
+				protocol: "https",
+				hostname: "plus.unsplash.com",
+			},
+			{
+				protocol: "https",
+				hostname: "yevgenysim-turkey.github.io",
+			},
 		],
 	},
 };

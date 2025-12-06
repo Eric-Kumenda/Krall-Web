@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import SectionHeader from '../SectionHeader';
-import EventCard from '../ui/EventCard';
+import SectionHeader from '../../SectionHeader';
+import EventCard from '../../ui/EventCard';
 import { Palette, Users, Music, Mic } from 'lucide-react';
 
 export default function EventsSection() {
