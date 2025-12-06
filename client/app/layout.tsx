@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Nunito } from "next/font/google";
-import "bootstrap/dist/css/bootstrap.min.css";
+
 
 import "./globals.css";
 import { ReduxProvider } from "@/store/provider";
-import BootstrapClient from "./bootstrap";
 
 const nunito = Nunito({
 	subsets: ["latin"],
@@ -41,35 +40,9 @@ export default function RootLayout({
 				/>
 				<meta name="theme-color" content="#ffce1b" />
 				<link rel="icon" href="/assets/img/Krall Logo -Primary.svg" />
-				<link
-					rel="stylesheet"
-					href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
-				/>
-				<link
-					rel="stylesheet"
-					href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
-				/>
-				<link
-					rel="stylesheet"
-					href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap"
-				/>
-				<link
-					rel="stylesheet"
-					href="assets/css/bs-theme-overrides.css"
-				/>
-				<link rel="stylesheet" href="assets/css/custom.compiled.css" />
-				<link
-					rel="stylesheet"
-					href="assets/css/Hero-Clean-Reverse-images.css"
-				/>
-				<link
-					rel="stylesheet"
-					href="assets/css/Navbar-Right-Links-icons.css"
-				/>
-				<link rel="stylesheet" href="assets/css/styles.css" />
+				
 			</head>
-			<body className={`${nunito.variable} ${geistMono.variable} bg-dark text-bg-dark`}>
-        <BootstrapClient />
+			<body className={`${nunito.variable} ${geistMono.variable}`}>
 				<ReduxProvider>{children}</ReduxProvider>
 			</body>
 		</html>

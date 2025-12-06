@@ -1,1 +1,57 @@
+/* Custom Fonts Import */
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #ffce1b;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-900 text-gray-100 font-nunito;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-montserrat;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[var(--primary)] text-gray-900 font-semibold hover:bg-yellow-500 transition-colors;
+  }
+  
+  .text-primary {
+    color: var(--primary);
+  }
+  
+  .border-primary {
+    border-color: var(--primary);
+  }
+  
+  .bg-dark {
+    @apply bg-gray-900;
+  }
+}
+
+
+/* Font Families */
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.font-nunito {
+  font-family: 'Nunito', sans-serif;
+}
+
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+}

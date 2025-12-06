@@ -1,127 +1,142 @@
-import Image from "next/image";
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Facebook, Twitter, Instagram, Linkedin, Mail, ArrowRight, MapPin, Phone } from 'lucide-react';
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer
-      className="text-body shadow"
-      style={{
-        background: "linear-gradient(90deg, #74683a 0%, #60511b 100%)",
-      }}
-    >
-      <div className="container py-4 py-lg-5">
-        <div className="row justify-content-center">
-          <div className="col-lg-4 text-center text-lg-start d-flex flex-column align-items-center align-items-lg-start item social">
-            <a className="mx-auto" href="#">
-              <Image
-                src="/assets/img/Krall Logo -Primary.svg"
-                width={48}
-                height={48}
-                alt="Krall Logo"
-              />
-            </a>
-            <a className="mx-auto" href="#">
-              <h5 className="mt-2">The Krall Konsult</h5>
-            </a>
+    <footer className="bg-gray-950 text-white pt-20 pb-10 border-t border-gray-800">
+      <div className="container mx-auto px-4">
+        {/* Top CTA Section */}
+        <div className="flex flex-col md:flex-row items-center justify-between bg-gray-900 rounded-3xl p-8 md:p-12 mb-16 relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <div className="relative z-10 mb-8 md:mb-0 text-center md:text-left">
+            <h2 className="text-3xl md:text-4xl font-bold font-montserrat mb-4">
+              Ready to <span className="text-primary">Lorem</span> Ipsum dolor?
+            </h2>
+            <p className="text-gray-400 max-w-xl">
+              Join forces with Krall Konsult and let's create something extraordinary together. Your vision, our expertise.
+            </p>
+          </div>
+          
+          <Link 
+            href="/contact" 
+            className="relative z-10 inline-flex items-center gap-2 bg-primary text-gray-900 font-bold px-8 py-4 rounded-full hover:bg-yellow-400 transition-all transform hover:scale-105 shadow-lg shadow-primary/20"
+          >
+            Let's Work Together
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
+
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          {/* Brand Column */}
+          <div className="space-y-6">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="relative w-10 h-10">
+                <Image 
+                  src="/assets/img/Krall Logo -Primary.svg" 
+                  alt="Krall Logo" 
+                  width={40} 
+                  height={40}
+                  className="object-contain"
+                />
+              </div>
+              <span className="font-montserrat font-bold text-xl tracking-wider">
+                KRALL <span className="text-primary">KONSULT</span>
+              </span>
+            </Link>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fusce vitae arcu.
+            </p>
+            <div className="flex gap-4">
+              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
+                <a 
+                  key={index}
+                  href="#" 
+                  className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-gray-900 transition-all duration-300"
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
+            </div>
           </div>
 
-          <div className="col-md-4 text-center text-lg-start d-flex flex-column item">
-            <h3 className="fs-6" style={{ fontFamily: "Montserrat, sans-serif" }}>
-              ABOUT
-            </h3>
-            <ul className="list-unstyled">
-              <li className="my-2 animate-underline">
-                <a className="text-decoration-none animate-target" href="/about">
-                  About Us
-                </a>
-              </li>
-              <li className="my-2 animate-underline">
-                <a className="text-decoration-none animate-target" href="/">
-                  Manifesto
-                </a>
-              </li>
-              <li className="my-2 animate-underline">
-                <a className="text-decoration-none animate-target" href="/about">
-                  Our Partners
-                </a>
-              </li>
-              <li className="my-2 animate-underline">
-                <a className="text-decoration-none animate-target" href="/team">
-                  Our Team
-                </a>
-              </li>
+          {/* Quick Links */}
+          <div>
+            <h3 className="font-montserrat font-bold text-lg mb-6">Quick Links</h3>
+            <ul className="space-y-4">
+              {['Home', 'About Us', 'Services', 'Events', 'Contact'].map((item) => (
+                <li key={item}>
+                  <Link 
+                    href={`/${item.toLowerCase().replace(' ', '-')}`}
+                    className="text-gray-400 hover:text-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                    {item}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className="col-md-4 text-center text-lg-start d-flex flex-column item">
-            <h3 className="fs-6" style={{ fontFamily: "Montserrat, sans-serif" }}>
-              USEFUL LINKS
-            </h3>
-            <ul className="list-unstyled">
-              <li className="my-2 animate-underline">
-                <a className="text-decoration-none animate-target" href="/terms">
-                  Privacy Policy
-                </a>
-              </li>
-              <li className="my-2 animate-underline">
-                <a className="text-decoration-none animate-target" href="/terms">
-                  Terms of Use
-                </a>
-              </li>
-              <li className="my-2 animate-underline">
-                <a className="text-decoration-none animate-target" href="#">
-                  Frequently Asked Questions
-                </a>
-              </li>
+          {/* Services */}
+          <div>
+            <h3 className="font-montserrat font-bold text-lg mb-6">Our Services</h3>
+            <ul className="space-y-4">
+              {['Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet'].map((item) => (
+                <li key={item}>
+                  <Link 
+                    href="/services"
+                    className="text-gray-400 hover:text-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                    {item}
+                  </Link>
+                </li>
+              ))}
             </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h3 className="font-montserrat font-bold text-lg mb-6">Newsletter</h3>
+            <p className="text-gray-400 text-sm mb-6">
+              Subscribe to our newsletter to get the latest updates and news.
+            </p>
+            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+              <div className="relative">
+                <input 
+                  type="email" 
+                  placeholder="Your email address" 
+                  className="w-full bg-gray-900 border border-gray-800 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-primary transition-colors"
+                />
+                <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+              </div>
+              <button 
+                type="submit"
+                className="w-full bg-white text-gray-900 font-bold py-3 rounded-lg hover:bg-primary transition-colors"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
 
-        <hr />
-
-        <div className="d-flex justify-content-between align-items-center pt-3">
-          <p className="mb-0">Copyright © 2025 THE KRALL</p>
-
-          {/* Desktop icons */}
-          <div className="d-none d-md-block d-flex">
-            {/* Facebook */}
-            <a className="btn btn-outline-light btn-sm me-2 rounded-0" href="#">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="1em"
-                width="1em"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <rect width="24" height="24" fill="none" />
-                <path d="M22,12c0-5.52-4.48-10-10-10S2,6.48,2,12c0,4.84,3.44,8.87,8,9.8V15H8v-3h2V9.5C10,7.57,11.57,6,13.5,6H16v3h-2c-.55,0-1,.45-1,1v2h3v3h-3v6.95C18.05,21.45,22,17.19,22,12z" />
-              </svg>
-            </a>
-
-            {/* Instagram */}
-            <a className="btn btn-outline-light btn-sm me-2 rounded-0" href="#">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="-32 0 512 512"
-                width="1em"
-                height="1em"
-                fill="currentColor"
-              >
-                <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8z" />
-              </svg>
-            </a>
-
-            {/* X / Twitter */}
-            <a className="btn btn-outline-light btn-sm rounded-0 me-2" href="#">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                width="1em"
-                height="1em"
-                fill="currentColor"
-              >
-                <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
-              </svg>
-            </a>
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-500 text-sm text-center md:text-left">
+            © {currentYear} Krall Konsult. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-sm text-gray-500">
+            <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <Link href="#" className="hidden hover:text-primary transition-colors">Cookie Policy</Link>
           </div>
         </div>
       </div>
