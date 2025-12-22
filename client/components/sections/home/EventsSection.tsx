@@ -1,43 +1,31 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import SectionHeader from '../../SectionHeader';
 import EventCard from '../../ui/EventCard';
-import { Palette, Users, Music, Mic } from 'lucide-react';
+import { Palette, Users, Music, Mic, Film, Trophy, BookOpen } from 'lucide-react';
+import { fetchEvents, selectEvents } from '@/store/slices/eventsSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 export default function EventsSection() {
-  const events = [
-    {
-      day: '30',
-      month: 'Sep',
-      dateFull: 'September 30, 2017',
-      title: 'Community Art Workshop',
-      description: 'Join us for an immersive art workshop designed to unleash your creativity. Perfect for all skill levels, this event focuses on collaborative mural painting.',
-      imageUrl: 'https://yevgenysim-turkey.github.io/touche/assets/img/8.jpg',
-      categoryIcon: <Palette className="w-6 h-6 text-purple-600" />,
-      categoryColor: '#9333ea' // Purple
-    },
-    {
-      day: '29',
-      month: 'Sep',
-      dateFull: 'September 29, 2017',
-      title: 'Networking Night',
-      description: 'Connect with local professionals and community leaders. An evening of meaningful conversations, idea sharing, and building lasting relationships.',
-      imageUrl: 'https://yevgenysim-turkey.github.io/touche/assets/img/9.jpg',
-      categoryIcon: <Users className="w-6 h-6 text-blue-600" />,
-      categoryColor: '#2563eb' // Blue
-    },
-    {
-      day: '28',
-      month: 'Sep',
-      dateFull: 'September 28, 2017',
-      title: 'Live Music Showcase',
-      description: 'Experience the best local talent at our monthly music showcase. Enjoy a variety of genres and support emerging artists in our community.',
-      imageUrl: 'https://yevgenysim-turkey.github.io/touche/assets/img/10.jpg',
-      categoryIcon: <Music className="w-6 h-6 text-pink-600" />,
-      categoryColor: '#db2777' // Pink
-    }
-  ];
+  const dispatch = useAppDispatch();
+  const events = useAppSelector(selectEvents);
+
+  useEffect(() => {
+    dispatch(fetchEvents());
+  }, [dispatch]);
+
+  // Map icon names to components if needed, or pass the component directly in slice (not serializable)
+  // Since we stored icon names in slice, we need a map
+  const iconMap = {
+    Palette: <Palette size={20} />,
+    Users: <Users size={20} />,
+    Music: <Music size={20} />,
+    Mic: <Mic size={20} />,
+    Film: <Film size={20} />,
+    Trophy: <Trophy size={20} />,
+    BookOpen: <BookOpen size={20} />
+  };
 
   return (
     <section className="py-20 bg-gray-900">
@@ -56,6 +44,7 @@ export default function EventsSection() {
             <EventCard
               key={index}
               {...event}
+              categoryIcon={iconMap[event.categoryIconName as keyof typeof iconMap]}
             />
           ))}
         </div>

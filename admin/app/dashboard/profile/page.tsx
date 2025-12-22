@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClient } from '@/utils/supabase/client'
+
 import { User, Camera, Loader2, Save } from 'lucide-react'
 import Image from 'next/image'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -20,7 +20,7 @@ export default function ProfilePage() {
   const [avatarFile, setAvatarFile] = useState<File | null>(null)
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
   
-  const supabase = createClient()
+
 
   useEffect(() => {
     dispatch(fetchProfile())
@@ -60,37 +60,19 @@ export default function ProfilePage() {
     setMessage(null)
 
     try {
-      let avatar_url = profile?.avatar_url
-
-      // Upload avatar if changed
+      const data = new FormData()
+      data.append('first_name', formData.first_name)
+      data.append('last_name', formData.last_name)
+      data.append('phone', formData.phone)
+      
       if (avatarFile) {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (!user) throw new Error('No user found')
-
-        const fileExt = avatarFile.name.split('.').pop()
-        const fileName = `${user.id}-${Math.random()}.${fileExt}`
-        const { error: uploadError } = await supabase.storage
-          .from('avatars')
-          .upload(fileName, avatarFile)
-
-        if (uploadError) throw uploadError
-        
-        const { data: { publicUrl } } = supabase.storage
-          .from('avatars')
-          .getPublicUrl(fileName)
-          
-        avatar_url = publicUrl
+        data.append('avatar', avatarFile)
       }
 
-      dispatch(updateProfile({
-        first_name: formData.first_name,
-        last_name: formData.last_name,
-        phone: formData.phone,
-        avatar_url
-      }))
+      await dispatch(updateProfile(data)).unwrap()
 
     } catch (error: any) {
-      setMessage({ type: 'error', text: error.message })
+      setMessage({ type: 'error', text: error.message || 'Failed to update profile' })
     }
   }
 

@@ -5,10 +5,10 @@ interface Product {
   name: string
   description: string
   price: number
-  image_url: string
   category: string
   stock_quantity: number
   is_active: boolean
+  image_url: string
 }
 
 interface MerchState {
@@ -29,21 +29,25 @@ export const fetchProducts = createAsyncThunk('merch/fetchProducts', async () =>
   return response.json()
 })
 
-export const createProduct = createAsyncThunk('merch/createProduct', async (productData: Partial<Product>) => {
+export const createProduct = createAsyncThunk('merch/createProduct', async (productData: FormData) => {
   const response = await fetch('/api/merch', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(productData),
+    body: productData,
   })
   if (!response.ok) throw new Error('Failed to create product')
   return response.json()
 })
 
-export const updateProduct = createAsyncThunk('merch/updateProduct', async ({ id, data }: { id: string; data: Partial<Product> }) => {
+export const fetchProductById = createAsyncThunk('merch/fetchProductById', async (id: string) => {
+  const response = await fetch(`/api/merch/${id}`)
+  if (!response.ok) throw new Error('Failed to fetch product')
+  return response.json()
+})
+
+export const updateProduct = createAsyncThunk('merch/updateProduct', async ({ id, data }: { id: string; data: FormData }) => {
   const response = await fetch(`/api/merch/${id}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+    body: data,
   })
   if (!response.ok) throw new Error('Failed to update product')
   return response.json()
@@ -76,20 +80,38 @@ const merchSlice = createSlice({
         state.loading = false
         state.error = action.error.message || 'Failed to fetch products'
       })
+      // Fetch Single
+      .addCase(fetchProductById.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.loading = false
+        const index = state.items.findIndex((item) => item.id === action.payload.id)
+        if (index !== -1) {
+          state.items[index] = action.payload
+        } else {
+          state.items.push(action.payload)
+        }
+      })
+      .addCase(fetchProductById.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message || 'Failed to fetch product'
+      })
       // Create
       .addCase(createProduct.fulfilled, (state, action) => {
-        state.items.unshift(action.payload)
+        state.items.push(action.payload)
       })
       // Update
       .addCase(updateProduct.fulfilled, (state, action) => {
-        const index = state.items.findIndex((p) => p.id === action.payload.id)
+        const index = state.items.findIndex((item) => item.id === action.payload.id)
         if (index !== -1) {
           state.items[index] = action.payload
         }
       })
       // Delete
       .addCase(deleteProduct.fulfilled, (state, action) => {
-        state.items = state.items.filter((p) => p.id !== action.payload)
+        state.items = state.items.filter((item) => item.id !== action.payload)
       })
   },
 })

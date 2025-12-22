@@ -1,7 +1,5 @@
 
 import React from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '../components/Footer';
 import HeroSection from '../components/sections/home/HeroSection';
 import WhatWeAreSection from '../components/sections/home/WhatWeAreSection';
 import ImpactSection from '../components/sections/home/ImpactSection';
@@ -17,7 +15,6 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col">
-      <Navbar />
       <HeroSection />
       <WhatWeAreSection />
       <ImpactSection />
@@ -26,7 +23,6 @@ export default function Home() {
       <ServicesSection />
       <EventsSection />
       <TestimonialsSection />
-      <Footer />
     </main>
   );
 }

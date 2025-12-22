@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from '@/utils/supabase/client'
+
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Save, Loader2, Upload } from 'lucide-react'
 import Link from 'next/link'
@@ -15,7 +15,7 @@ export default function NewMerchPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const supabase = createClient()
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -39,28 +39,19 @@ export default function NewMerchPage() {
     setLoading(true)
 
     try {
-      let image_url = ''
+      const data = new FormData()
+      data.append('name', formData.name)
+      data.append('description', formData.description)
+      data.append('price', formData.price.toString())
+      data.append('category', formData.category)
+      data.append('stock_quantity', formData.stock_quantity.toString())
+      data.append('is_active', formData.is_active.toString())
 
       if (imageFile) {
-        const fileExt = imageFile.name.split('.').pop()
-        const fileName = `merch-${Date.now()}.${fileExt}`
-        const { error: uploadError } = await supabase.storage
-          .from('merch-images')
-          .upload(fileName, imageFile)
-
-        if (uploadError) throw uploadError
-
-        const { data: { publicUrl } } = supabase.storage
-          .from('merch-images')
-          .getPublicUrl(fileName)
-        
-        image_url = publicUrl
+        data.append('image', imageFile)
       }
 
-      await dispatch(createProduct({
-        ...formData,
-        image_url
-      })).unwrap()
+      await dispatch(createProduct(data)).unwrap()
 
       router.push('/dashboard/merch')
     } catch (error) {

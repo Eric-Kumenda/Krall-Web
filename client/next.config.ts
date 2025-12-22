@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
+				hostname: "lnzvhhyokfsnlvozaqvw.supabase.co",
+			},
+			{
+				protocol: "https",
 				hostname: "images.unsplash.com",
 			},
 			{
@@ -18,9 +22,20 @@ const nextConfig: NextConfig = {
 			},
 			{
 				protocol: "https",
-				hostname: "yevgenysim-turkey.github.io",
+				hostname: "html.themegenix.com",
 			},
 		],
+	},
+	async rewrites() {
+		return [
+			{
+				source: "/api/admin/:path*",
+				destination: `${
+					process.env.NEXT_PUBLIC_ADMIN_API_URL ||
+					"http://172.16.1.187:3002/api"
+				}/:path*`,
+			},
+		];
 	},
 };
 

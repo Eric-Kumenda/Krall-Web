@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from '@/utils/supabase/client'
+
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Save, Loader2, Upload, Calendar as CalendarIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -15,7 +15,7 @@ export default function NewEventPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const supabase = createClient()
+
 
   const [formData, setFormData] = useState({
     title: '',
@@ -40,32 +40,27 @@ export default function NewEventPage() {
     setLoading(true)
 
     try {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) throw new Error('Not authenticated')
-
-      let image_url = ''
+      // We don't need to check auth here explicitly as the API/Middleware handles it, 
+      // but we need the user ID for 'created_by'. 
+      // Ideally, the API should extract user ID from the session, but for now we'll pass it if available or let API handle it.
+      // Since we removed createClient, we can't get user here easily without a selector.
+      // Assuming the API will get the user from the session cookie.
+      
+      const data = new FormData()
+      data.append('title', formData.title)
+      data.append('description', formData.description)
+      data.append('date', formData.date)
+      data.append('location', formData.location)
+      data.append('price', formData.price.toString())
+      data.append('tickets_available', formData.tickets_available.toString())
+      data.append('is_published', formData.is_published.toString())
+      // data.append('created_by', user.id) // Let API handle this from session if possible, or we need a user selector
 
       if (imageFile) {
-        const fileExt = imageFile.name.split('.').pop()
-        const fileName = `event-${Date.now()}.${fileExt}`
-        const { error: uploadError } = await supabase.storage
-          .from('event-images')
-          .upload(fileName, imageFile)
-
-        if (uploadError) throw uploadError
-
-        const { data: { publicUrl } } = supabase.storage
-          .from('event-images')
-          .getPublicUrl(fileName)
-        
-        image_url = publicUrl
+        data.append('image', imageFile)
       }
 
-      await dispatch(createEvent({
-        ...formData,
-        image_url,
-        created_by: user.id
-      })).unwrap()
+      await dispatch(createEvent(data)).unwrap()
 
       router.push('/dashboard/events')
     } catch (error) {

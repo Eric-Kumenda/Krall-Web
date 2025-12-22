@@ -4,6 +4,8 @@ import { Geist, Geist_Mono, Nunito } from "next/font/google";
 
 import "./globals.css";
 import { ReduxProvider } from "@/store/provider";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const nunito = Nunito({
 	subsets: ["latin"],
@@ -49,7 +51,11 @@ export default function RootLayout({
 				
 			</head>
 			<body className={`${nunito.variable} ${geistMono.variable}`}>
-				<ReduxProvider>{children}</ReduxProvider>
+				<ReduxProvider>
+					<Navbar />
+					{children}
+					<Footer />
+				</ReduxProvider>
 			</body>
 		</html>
 	);

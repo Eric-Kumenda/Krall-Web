@@ -1,44 +1,18 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { createClient } from '@/utils/supabase/client'
+import { useEffect } from 'react'
 import { Calendar, ShoppingBag, Users, TrendingUp } from 'lucide-react'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { fetchDashboardStats } from '@/store/slices/dashboardSlice'
+import Link from 'next/link'
 
 export default function DashboardPage() {
-  const [stats, setStats] = useState({
-    events: 0,
-    merch: 0,
-    users: 0,
-    revenue: 0
-  })
-  const [loading, setLoading] = useState(true)
-  const supabase = createClient()
+  const dispatch = useAppDispatch()
+  const { stats, loading } = useAppSelector((state) => state.dashboard)
 
   useEffect(() => {
-    const fetchStats = async () => {
-      // Fetch counts from Supabase
-      // Note: This requires the tables to exist and have data. 
-      // For now we will just fetch counts if tables exist, or default to 0.
-      
-      const { count: eventsCount } = await supabase.from('events').select('*', { count: 'exact', head: true })
-      const { count: merchCount } = await supabase.from('merch').select('*', { count: 'exact', head: true })
-      const { count: usersCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true })
-      
-      // Revenue would typically come from an orders table
-      // const { data: orders } = await supabase.from('orders').select('total_amount')
-      // const revenue = orders?.reduce((acc, order) => acc + (order.total_amount || 0), 0) || 0
-
-      setStats({
-        events: eventsCount || 0,
-        merch: merchCount || 0,
-        users: usersCount || 0,
-        revenue: 0 // Placeholder
-      })
-      setLoading(false)
-    }
-
-    fetchStats()
-  }, [])
+    dispatch(fetchDashboardStats())
+  }, [dispatch])
 
   const statCards = [
     { title: 'Total Events', value: stats.events, icon: Calendar, color: 'text-blue-400', bg: 'bg-blue-400/10' },
@@ -82,16 +56,16 @@ export default function DashboardPage() {
         <div className="glass-card p-6 rounded-2xl min-h-[300px]">
            <h3 className="text-xl font-bold text-white mb-4">Quick Actions</h3>
            <div className="grid grid-cols-2 gap-4">
-             <button className="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors text-left border border-gray-700">
+             <Link href="/dashboard/events/new" className="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors text-left border border-gray-700 block">
                <Calendar className="mb-2 text-primary" />
                <span className="font-bold block">Create Event</span>
                <span className="text-xs text-gray-400">Add a new event</span>
-             </button>
-             <button className="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors text-left border border-gray-700">
+             </Link>
+             <Link href="/dashboard/merch/new" className="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors text-left border border-gray-700 block">
                <ShoppingBag className="mb-2 text-purple-400" />
                <span className="font-bold block">Add Merch</span>
                <span className="text-xs text-gray-400">New product</span>
-             </button>
+             </Link>
            </div>
         </div>
       </div>

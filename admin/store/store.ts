@@ -4,6 +4,8 @@ import eventsReducer from './slices/eventsSlice'
 import merchReducer from './slices/merchSlice'
 import usersReducer from './slices/usersSlice'
 import profileReducer from './slices/profileSlice'
+import attendeesReducer from './slices/attendeesSlice'
+import dashboardReducer from './slices/dashboardSlice'
 
 export const makeStore = () => {
   return configureStore({
@@ -12,6 +14,8 @@ export const makeStore = () => {
       merch: merchReducer,
       users: usersReducer,
       profile: profileReducer,
+      attendees: attendeesReducer,
+      dashboard: dashboardReducer,
     },
   })
 }

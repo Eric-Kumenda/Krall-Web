@@ -6,6 +6,7 @@ import Image from 'next/image';
 import LanyardBadge from './LanyardBadge';
 
 interface EventCardProps {
+  id: string | number;
   day: string;
   month: string;
   dateFull: string;
@@ -17,6 +18,7 @@ interface EventCardProps {
 }
 
 export default function EventCard({ 
+  id,
   day, 
   month, 
   dateFull, 
@@ -35,6 +37,7 @@ export default function EventCard({
           alt={title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"
+          unoptimized={true}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent lg:hidden" />
         
@@ -77,14 +80,14 @@ export default function EventCard({
 
         <div className="flex items-center gap-4 mt-auto">
           <Link 
-            href="/events" 
+            href={`/events/${id}`} 
             className="inline-flex items-center gap-2 bg-primary text-gray-900 font-bold px-6 py-2.5 rounded-full hover:bg-yellow-400 transition-all text-sm shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:-translate-y-0.5"
           >
             Get Ticket
           </Link>
-          <button className="text-gray-400 hover:text-white text-sm font-bold transition-colors px-4 py-2 rounded-full hover:bg-white/5">
+          <Link href={`/events/${id}`} className="text-gray-400 hover:text-white text-sm font-bold transition-colors px-4 py-2 rounded-full hover:bg-white/5">
             View Details
-          </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -69,7 +69,7 @@ export default function MerchPage() {
               {/* Image */}
               <div className="relative h-48 bg-gray-800">
                 {product.image_url ? (
-                  <Image src={product.image_url} alt={product.name} fill className="object-cover" />
+                  <Image src={product.image_url} alt={product.name} fill className="object-contain hover:object-cover transition-all duration-500" unoptimized={true} />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center text-gray-600">
                     <ShoppingBag size={48} />

@@ -7,21 +7,20 @@ interface Profile {
   email: string
   phone: string
   avatar_url: string
-  role: string
 }
 
 interface ProfileState {
   data: Profile | null
   loading: boolean
-  error: string | null
   updateStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
+  error: string | null
 }
 
 const initialState: ProfileState = {
   data: null,
   loading: false,
-  error: null,
   updateStatus: 'idle',
+  error: null,
 }
 
 export const fetchProfile = createAsyncThunk('profile/fetchProfile', async () => {
@@ -30,11 +29,10 @@ export const fetchProfile = createAsyncThunk('profile/fetchProfile', async () =>
   return response.json()
 })
 
-export const updateProfile = createAsyncThunk('profile/updateProfile', async (data: Partial<Profile>) => {
+export const updateProfile = createAsyncThunk('profile/updateProfile', async (profileData: FormData) => {
   const response = await fetch('/api/profile', {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+    body: profileData,
   })
   if (!response.ok) throw new Error('Failed to update profile')
   return response.json()
@@ -46,6 +44,7 @@ const profileSlice = createSlice({
   reducers: {
     resetUpdateStatus: (state) => {
       state.updateStatus = 'idle'
+      state.error = null
     }
   },
   extraReducers: (builder) => {
@@ -66,10 +65,11 @@ const profileSlice = createSlice({
       // Update
       .addCase(updateProfile.pending, (state) => {
         state.updateStatus = 'loading'
+        state.error = null
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.updateStatus = 'succeeded'
-        state.data = { ...state.data, ...action.payload }
+        state.data = action.payload
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.updateStatus = 'failed'
