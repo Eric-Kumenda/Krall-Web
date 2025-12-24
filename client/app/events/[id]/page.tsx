@@ -77,6 +77,9 @@ export default function EventDetailsPage() {
 							<div className="absolute top-4 left-4 bg-primary text-black font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider">
 								{event.category}
 							</div>
+							{/* <div className="absolute top-4 right-4">
+								<Lanyard />
+							</div> */}
 						</div>
 
 						{/* Title & Description */}

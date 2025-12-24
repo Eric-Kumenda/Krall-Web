@@ -98,3 +98,94 @@ export const getKrallEmailTemplate = (code: string) => `
 </body>
 </html>
 `;
+
+export const getTicketEmailTemplate = (
+	eventName: string,
+	tickets: { name: string; code: string; qrUrl: string }[]
+) => `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Tickets - ${eventName}</title>
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #111827;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .card {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      margin-bottom: 20px;
+    }
+    .ticket {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 20px;
+        margin-top: 20px;
+    }
+    h1 { color: #ffffff; margin-bottom: 10px; }
+    h2 { color: #ffce1b; margin: 0 0 20px; }
+    p { color: #9ca3af; line-height: 1.6; }
+    .qr-code {
+        margin: 20px auto;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        display: inline-block;
+    }
+    .qr-code img {
+        width: 150px;
+        height: 150px;
+        display: block;
+    }
+    .ticket-code {
+        font-family: monospace;
+        background: #374151;
+        padding: 8px 16px;
+        border-radius: 6px;
+        color: #fff;
+        font-size: 1.2em;
+        letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h2 style="color: white; margin-bottom: 30px;">KRALL <span style="color: #ffce1b;">KONSULT</span></h2>
+      <h1>You're Going!</h1>
+      <p>Here are your tickets for <strong>${eventName}</strong>.</p>
+      
+      ${tickets
+			.map(
+				(t) => `
+        <div class="ticket">
+            <h3 style="color: white; margin: 0;">${t.name}</h3>
+            <div class="qr-code">
+                <img src="${t.qrUrl}" alt="QR Code" />
+            </div>
+            <div class="ticket-code">${t.code}</div>
+        </div>
+      `
+			)
+			.join("")}
+
+      <p style="margin-top: 40px;">Please present these QR codes at the entrance.</p>
+    </div>
+  </div>
+</body>
+</html>
+`;

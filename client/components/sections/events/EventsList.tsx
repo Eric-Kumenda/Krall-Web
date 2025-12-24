@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Calendar,
 	Music,
@@ -9,8 +9,11 @@ import {
 	Trophy,
 	Film,
 	Users,
+	Loader2,
 } from "lucide-react";
 import EventCard from "../../ui/EventCard";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchEvents } from "@/store/slices/eventsSlice";
 
 const categories = [
 	{ id: "all", label: "All Events" },
@@ -20,86 +23,52 @@ const categories = [
 	{ id: "community", label: "Community" },
 ];
 
-const eventsData = [
-	{
-		id: 1,
-		category: "art",
-		day: "12",
-		month: "SEP",
-		dateFull: "Wed, 12 September, 2025 • 2pm - 5:30pm",
-		title: "Modern African Art Exhibition",
-		description:
-			"Experience a curated collection of contemporary African art featuring emerging artists from across the continent. Join us for an evening of culture, conversation, and creativity.",
-		imageUrl:
-			"https://images.unsplash.com/photo-1561489396-888724a1543d?w=800&auto=format&fit=crop&q=60",
-		categoryIcon: <Palette size={20} />,
-		categoryColor: "#FFD700",
-	},
-	{
-		id: 2,
-		category: "music",
-		day: "15",
-		month: "SEP",
-		dateFull: "Sat, 15 September, 2025 • 6pm - 10pm",
-		title: "Acoustic Soul Night",
-		description:
-			"An intimate evening of live acoustic performances by local talents. Enjoy soulful melodies under the stars in our open-air amphitheater.",
-		imageUrl:
-			"https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800&auto=format&fit=crop&q=60",
-		categoryIcon: <Music size={20} />,
-		categoryColor: "#FF6B6B",
-	},
-	{
-		id: 3,
-		category: "workshops",
-		day: "20",
-		month: "SEP",
-		dateFull: "Thu, 20 September, 2025 • 10am - 1pm",
-		title: "Digital Storytelling Workshop",
-		description:
-			"Learn the art of digital storytelling with industry experts. This hands-on workshop covers scriptwriting, filming techniques, and editing basics.",
-		imageUrl:
-			"https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&auto=format&fit=crop&q=60",
-		categoryIcon: <BookOpen size={20} />,
-		categoryColor: "#4ECDC4",
-	},
-	{
-		id: 4,
-		category: "community",
-		day: "25",
-		month: "SEP",
-		dateFull: "Tue, 25 September, 2025 • 9am - 12pm",
-		title: "Community Clean-up Drive",
-		description:
-			"Join hands with us to make our neighborhood cleaner and greener. A community initiative to promote environmental awareness and civic responsibility.",
-		imageUrl:
-			"https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&auto=format&fit=crop&q=60",
-		categoryIcon: <Trophy size={20} />,
-		categoryColor: "#95A5A6",
-	},
-	{
-		id: 5,
-		category: "art",
-		day: "05",
-		month: "OCT",
-		dateFull: "Fri, 05 October, 2025 • 5pm - 8pm",
-		title: "Film Screening: African Narratives",
-		description:
-			"A special screening of award-winning short films by young African directors. Followed by a Q&A session with the filmmakers.",
-		imageUrl:
-			"https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&auto=format&fit=crop&q=60",
-		categoryIcon: <Film size={20} />,
-		categoryColor: "#A8D0E6",
-	},
-];
+const iconMap: Record<string, React.ReactNode> = {
+	Palette: <Palette size={20} />,
+	Users: <Users size={20} />,
+	Music: <Music size={20} />,
+	Mic: <Music size={20} />, // Fallback
+	Film: <Film size={20} />,
+	Trophy: <Trophy size={20} />,
+	BookOpen: <BookOpen size={20} />,
+};
 
 export default function EventsList() {
 	const [activeCategory, setActiveCategory] = useState("all");
+	const dispatch = useAppDispatch();
+	const { events, loading, error } = useAppSelector((state) => state.events);
+
+	useEffect(() => {
+		dispatch(fetchEvents());
+	}, [dispatch]);
 
 	const filteredEvents =
 		activeCategory === "all"
-			? eventsData
-			: eventsData.filter((event) => event.category === activeCategory);
+			? events
+			: events.filter(
+					(event) =>
+						event.category.toLowerCase() ===
+						activeCategory.toLowerCase()
+			  );
+
+	if (loading) {
+		return (
+			<section className="py-20 bg-gray-900 min-h-screen flex items-center justify-center">
+				<Loader2 className="w-10 h-10 text-primary animate-spin" />
+			</section>
+		);
+	}
+
+	if (error) {
+		return (
+			<section className="py-20 bg-gray-900 min-h-screen flex items-center justify-center">
+				<div className="text-center text-red-400">
+					<p>Error loading events</p>
+					<p className="text-sm text-gray-500">{error}</p>
+				</div>
+			</section>
+		);
+	}
 
 	return (
 		<section className="py-20 bg-gray-900 min-h-screen">
@@ -124,7 +93,15 @@ export default function EventsList() {
 				<div className="max-w-5xl mx-auto space-y-6">
 					{filteredEvents.length > 0 ? (
 						filteredEvents.map((event) => (
-							<EventCard key={event.id} {...event} />
+							<EventCard
+								key={event.id}
+								{...event}
+								categoryIcon={
+									iconMap[event.categoryIconName] || (
+										<Users size={20} />
+									)
+								}
+							/>
 						))
 					) : (
 						<div className="text-center py-20">

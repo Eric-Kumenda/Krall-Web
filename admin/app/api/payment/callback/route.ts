@@ -1,67 +1,127 @@
-import { NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
+import { NextResponse } from "next/server";
+import { createClient } from "@/utils/supabase/server";
+import QRCode from "qrcode";
+import { Resend } from "resend";
+import { getTicketEmailTemplate } from "@/utils/email-template";
 
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const { Body: { stkCallback } } = body;
+	try {
+		const body = await request.json();
+		const {
+			Body: { stkCallback },
+		} = body;
 
-    if (!stkCallback) {
-      return NextResponse.json({ error: 'Invalid callback data' }, { status: 400 });
-    }
+		if (!stkCallback) {
+			return NextResponse.json(
+				{ error: "Invalid callback data" },
+				{ status: 400 }
+			);
+		}
 
-    const checkoutRequestId = stkCallback.CheckoutRequestID;
-    const resultCode = stkCallback.ResultCode;
+		const checkoutRequestId = stkCallback.CheckoutRequestID;
+		const resultCode = stkCallback.ResultCode;
 
-    const supabase = await createClient();
+		const supabase = await createClient();
 
-    // Find registration
-    const { data: registration, error: regError } = await supabase
-      .from('registrations')
-      .select('*')
-      .eq('mpesa_checkout_request_id', checkoutRequestId)
-      .single();
+		// Find registration
+		const { data: registration, error: regError } = await supabase
+			.from("registrations")
+			.select("*, events(title, date)")
+			.eq("mpesa_checkout_request_id", checkoutRequestId)
+			.single();
 
-    if (regError || !registration) {
-      console.error('Registration not found for callback:', checkoutRequestId);
-      return NextResponse.json({ error: 'Registration not found' }, { status: 404 });
-    }
+		if (regError || !registration) {
+			console.error(
+				"Registration not found for callback:",
+				checkoutRequestId
+			);
+			return NextResponse.json(
+				{ error: "Registration not found" },
+				{ status: 404 }
+			);
+		}
 
-    if (resultCode === 0) {
-      // Payment Successful
-      await supabase
-        .from('registrations')
-        .update({ status: 'paid' })
-        .eq('id', registration.id);
+		if (resultCode === 0) {
+			// Payment Successful
+			await supabase
+				.from("registrations")
+				.update({ status: "paid" })
+				.eq("id", registration.id);
 
-      // Generate Attendees (This logic might need to be passed from client or stored temporarily)
-      // Since callback is async and decoupled, we might not have attendee details here if we didn't store them.
-      // Strategy: Store attendees in a temporary table or JSON column in 'registrations' initially?
-      // For now, let's assume the client will poll and trigger attendee creation, OR we store them in 'registrations' metadata.
-      // Simpler approach for this MVP: Client polls 'registrations' status. If paid, Client calls another endpoint to 'finalize' and create attendees?
-      // BETTER: Store attendees in 'registrations' as a JSONB column 'attendee_details' during initiation.
-      
-      // Let's assume we added 'attendee_details' JSONB to registrations table (I should update SQL).
-      // But since I can't easily change SQL now without user interaction, I will rely on the client to "finalize" 
-      // OR I will just mark it paid here, and the client (which is polling) will see "paid" and then call "create-attendees".
-      // This is less secure (client could fake it), but for MVP it works. 
-      // SECURE WAY: Client sends attendees in initiate. We store in DB. Callback creates attendees.
-      
-      // I'll stick to updating status to 'paid'.
-      
-    } else {
-      // Payment Failed
-      await supabase
-        .from('registrations')
-        .update({ status: 'failed' })
-        .eq('id', registration.id);
-    }
+			// Process Attendees
+			const attendeeList = registration.attendee_details || [];
+			const ticketsForEmail = [];
 
-    return NextResponse.json({ message: 'Callback received' });
+			for (const att of attendeeList) {
+				// Generate Unique Ticket Code
+				const ticketSuffix = Math.random()
+					.toString(36)
+					.substring(2, 8)
+					.toUpperCase();
+				const ticketCode = `TKT-${ticketSuffix}`;
 
-  } catch (error) {
-    console.error('Error in mpesa callback:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
-  }
+				// Create Attendee Record
+				const { data: newAttendee, error: attError } = await supabase
+					.from("attendees")
+					.insert({
+						registration_id: registration.id,
+						name: att.name,
+						ticket_code: ticketCode,
+						checked_in: false,
+						// Assuming ticket_type_id logic is handled or nullable for now.
+						// If passed from frontend, use it. `att.ticketTypeId`?
+					})
+					.select()
+					.single();
+
+				if (attError) {
+					console.error("Failed to create attendee:", attError);
+					continue; // Skip or handle error
+				}
+
+				// Generate QR Code
+				const qrUrl = await QRCode.toDataURL(ticketCode);
+
+				ticketsForEmail.push({
+					name: att.name,
+					code: ticketCode,
+					qrUrl: qrUrl,
+				});
+			}
+
+			// Send Email
+			if (process.env.RESEND_API_KEY && ticketsForEmail.length > 0) {
+				const resend = new Resend(process.env.RESEND_API_KEY);
+				const eventTitle =
+					registration.events?.title || "Unknown Event";
+
+				await resend.emails.send({
+					from: "Krall Events <noreply@krall.co.ke>", // Adjust sender domain
+					to: registration.user_email,
+					subject: `Your Tickets for ${eventTitle}`,
+					html: getTicketEmailTemplate(eventTitle, ticketsForEmail),
+				});
+
+				console.log(`Tickets sent to ${registration.user_email}`);
+			} else {
+				console.warn(
+					"RESEND_API_KEY missing or no tickets generated. Email not sent."
+				);
+			}
+		} else {
+			// Payment Failed
+			await supabase
+				.from("registrations")
+				.update({ status: "failed" })
+				.eq("id", registration.id);
+		}
+
+		return NextResponse.json({ message: "Callback processed" });
+	} catch (error) {
+		console.error("Error in mpesa callback:", error);
+		return NextResponse.json(
+			{ error: "Internal server error" },
+			{ status: 500 }
+		);
+	}
 }
